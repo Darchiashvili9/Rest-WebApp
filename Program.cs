@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 using WebApp;
 using WebApp.Models;
 
@@ -10,17 +11,19 @@ builder.Services.AddDbContext<DataContext>(opts =>
     opts.EnableSensitiveDataLogging();
 });
 
+builder.Services.AddControllers();
+
+
 var app = builder.Build();
 
+app.MapControllers();
+
+
+
 app.UseMiddleware<TestMiddleware>();
-
-
 app.MapGet("/", () => "Hello World!");
-
 
 var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<DataContext>();
 SeedData.SeedDatabase(context);
-
-
 
 app.Run();
