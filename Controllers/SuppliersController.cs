@@ -3,6 +3,8 @@ using WebApp.Models;
 
 namespace WebApp.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class SuppliersController : ControllerBase
     {
         private DataContext _dataContext;
@@ -13,9 +15,9 @@ namespace WebApp.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<Supplier?> GetSupplier(long supplierId)
+        public async Task<Supplier?> GetSupplier(long id)
         {
-            return await _dataContext.Suppliers.FindAsync(supplierId);
+            return await _dataContext.Suppliers.FindAsync(id);
         }
     }
 }
