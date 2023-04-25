@@ -9,7 +9,7 @@ namespace WebApp.Controllers
     {
         private DataContext _dataContext;
 
-        ProductsController(DataContext dataContext)
+        public ProductsController(DataContext dataContext)
         {
             _dataContext = dataContext;
         }
