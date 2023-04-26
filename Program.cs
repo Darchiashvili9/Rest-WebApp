@@ -21,6 +21,11 @@ builder.Services.Configure<MvcNewtonsoftJsonOptions>(opts =>
     opts.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
 });
 
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "WebApp", Version = "v1" });
+});
+
 
 var app = builder.Build();
 
@@ -30,6 +35,13 @@ app.MapControllers();
 
 app.UseMiddleware<TestMiddleware>();
 app.MapGet("/", () => "Hello World!");
+
+
+app.UseSwagger();
+app.UseSwaggerUI(opts =>
+{
+    opts.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApp");
+});
 
 var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<DataContext>();
 SeedData.SeedDatabase(context);
